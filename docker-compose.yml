@@ -1,0 +1,31 @@
+# Version of Dcoker we will be using
+version: "3"
+# Services are containers we will be spinning up
+services:
+  # This is the config for the react container
+  react:
+    stdin_open: true
+    # The specific build. {context: where the file is, dockerfile: which file it is}
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    # Mapping port 3000:3000
+    ports:
+      - "3000:3000"
+    # Reserving a node modules directorty in the container
+    # copying the current working dir to /app in the container
+    volumes:
+      - /app/node_modules
+      - .:/app
+  # This is the name of the second service. Tests
+  tests:
+    # This is using the same build context and docker file
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    # Dont overwrite the node_modules file and map the cwd to /app in the container
+    volumes:
+      - /app/node_modules
+      - .:/app
+    # Run the command "npm run test"
+    command: ["npm", "run", "test"]

@@ -1,0 +1,12 @@
+sudo: required
+language: generic
+
+services:
+  - docker
+
+before_install:
+  - docker build -t brucejmcclure/travis-docker -f Docerfile.dev .
+
+script:
+  - docker run -e CI=true brucejmcclure/travis-docker npm run test
+#
