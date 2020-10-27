@@ -9,4 +9,3 @@ before_install:
 
 script:
   - docker run -e CI=true brucejmcclure/docker-ci npm run test
-#
